@@ -156,11 +156,6 @@ function initializeCalculator () {
             }
     }
 
-    function displayError() {
-        const displayDiv = document.querySelector('.display-div');
-        displayDiv.textContent = 'ERROR';
-    }
-
     function displayResult(result) {
         const displayDiv = document.querySelector('.display-div');
         displayDiv.textContent = result;

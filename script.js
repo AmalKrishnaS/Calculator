@@ -19,6 +19,7 @@ function initializeCalculator () {
 
     let displayList = [];
     let lengthIncrementor = 0;
+    let operatorButton = null;
     const calcObj = {
         firstNumber : null,
         secondNumber : null,
@@ -65,6 +66,19 @@ function initializeCalculator () {
     buttonsContainer.addEventListener('click', (event) => {
         const buttonElement = event.target;
         const buttonValue = event.target.textContent;
+
+        if (buttonElement.classList.contains('btn-operator')) {
+            if (operatorButton !== null) {
+                operatorButton.style.backgroundColor = 'orange';
+                operatorButton = null;
+            }
+            operatorButton = buttonElement;
+            buttonElement.style.backgroundColor = 'rgb(189, 126, 9)';
+        }
+        else if (operatorButton !== null) {
+            operatorButton.style.backgroundColor = 'orange';
+            operatorButton = null;
+        }
 
         if (calcObj.firstNumber !== null && displayList.length !== 0 && buttonElement.classList.contains('btn-operator') && calcObj.operator !== null) {
             calcObj.secondNumber = parseInt(displayList.join(''));

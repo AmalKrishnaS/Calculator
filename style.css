@@ -73,6 +73,10 @@ html, body {
     background-color: teal;
 }
 
+.btn.btn-number:active {
+    background-color: rgb(12, 102, 102);
+}
+
 .btn.btn-operator {
     background-color: orange;
 }
@@ -81,6 +85,14 @@ html, body {
     background-color: rgb(202, 14, 14);
 }
 
-.btn-equals {
+.btn.btn-clear:active {
+    background-color: rgb(170, 12, 12);    
+}
+
+.btn.btn-equals {
     background-color: rgb(7, 106, 236);
+}
+
+.btn.btn-equals:active {
+    background-color: rgb(8, 86, 189);
 }

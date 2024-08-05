@@ -1,65 +1,62 @@
-function add (firstNumber, secondNumber) {
-    return firstNumber + secondNumber;
-}
-
-function substract (firstNumber, secondNumber) {
-    return firstNumber - secondNumber;
-}
-
-function multiply (firstNumber, secondNumber) {
-    return firstNumber * secondNumber;
-}
-
-function division (firstNumber, secondNumber) {
-    return firstNumber / secondNumber;
-}
-
 function initializeCalculator () {
     const buttonsContainer = document.querySelector('#container-buttons');
 
     let displayList = [];
     let lengthIncrementor = 0;
     let operatorButton = null;
-    const calcObj = {
+
+    const calculator = {
         firstNumber : null,
         secondNumber : null,
         operator : null,
         result: null,
-        operate: function (firstNumber, secondNumber, operator) {
+        operate: function () {
             let result = 0;
-            switch (operator) {
+            switch (this.operator) {
                 case '+':
-                    result = add(firstNumber, secondNumber);
-                    return calcObj.format(result);
+                    result = this.add();
+                    return this.format();
                 case '-':
-                    result = substract(firstNumber, secondNumber);
-                    return calcObj.format(result);
+                    result = this.substract();
+                    return this.format();
                 case '*':
-                    result = multiply(firstNumber, secondNumber);
-                    return calcObj.format(result);
+                    result = this.multiply();
+                    return this.format();
                 case '/':
-                    result = division(firstNumber, secondNumber);
-                    return calcObj.format(result);
+                    result = this.division();
+                    return this.format();
             }
         
         },
-        format: function (result) {
+        format: function () {
             let strResult = null;
-            if (String(result).includes('.')) {
-                strResult = result.toFixed(1);
+            if (String(this.result).includes('.')) {
+                strResult = this.result.toFixed(1);
             }
             else {
-                strResult = String(result);
+                strResult = String(this.result);
             }
 
             if (strResult.length > 7) {
                 return Number(strResult).toExponential(2);
             }
             else {
-                return result;
+                return this.result;
             }
             
         },
+        add: function () {
+            return this.firstNumber + this.secondNumber;
+        },
+        substract: function () {
+            return this.firstNumber - this.secondNumber;
+        },
+        multiply: function () {
+            return this.firstNumber * this.secondNumber;
+        },
+        division: function () {
+            return this.firstNumber / this.secondNumber;
+        }
 
     };
 
@@ -80,15 +77,15 @@ function initializeCalculator () {
             operatorButton = null;
         }
 
-        if (calcObj.firstNumber !== null && displayList.length !== 0 && buttonElement.classList.contains('btn-operator') && calcObj.operator !== null) {
-            calcObj.secondNumber = parseInt(displayList.join(''));
-            calcObj.result = calcObj.operate(calcObj.firstNumber, calcObj.secondNumber, calcObj.operator);
+        if (calculator.firstNumber !== null && displayList.length !== 0 && buttonElement.classList.contains('btn-operator') && calculator.operator !== null) {
+            calculator.secondNumber = parseInt(displayList.join(''));
+            calculator.result = calculator.operate();
             displayList = [];
             lengthIncrementor = 0;
-            calcObj.secondNumber = null;
-            calcObj.firstNumber = null;
-            calcObj.operator = null;
-            displayResult(calcObj.result);
+            calculator.secondNumber = null;
+            calculator.firstNumber = null;
+            calculator.operator = null;
+            displayResult(calculator.result);
         }
         
         if (buttonElement.classList.contains('btn-number')) {
@@ -97,35 +94,35 @@ function initializeCalculator () {
         }
         else if (buttonElement.classList.contains('btn-operator')) {
 
-            if  (displayList.length === 0 && calcObj.result !== null) {
-                calcObj.firstNumber = calcObj.result;
+            if  (displayList.length === 0 && calculator.result !== null) {
+                calculator.firstNumber = calculator.result;
                 displayList = [];
                 lengthIncrementor = 0;
             }
             else if (displayList.length !== 0) {
-                calcObj.firstNumber = parseInt(displayList.join(''));
+                calculator.firstNumber = parseInt(displayList.join(''));
                 displayList = [];
                 lengthIncrementor = 0;
             }
 
-            calcObj.operator = buttonValue;
+            calculator.operator = buttonValue;
         }
         else if (buttonValue === 'AC') {
             displayResult(0);
             resetCalculator();
-            calcObj.result = null;
+            calculator.result = null;
         }
         else if (buttonValue === '=') {
             if (displayList.length !== 0) {
-                calcObj.secondNumber = parseInt(displayList.join(''));
-                if (calcObj.firstNumber !== null && calcObj.secondNumber !== null) {
-                    calcObj.result = calcObj.operate(calcObj.firstNumber, calcObj.secondNumber, calcObj.operator);
+                calculator.secondNumber = parseInt(displayList.join(''));
+                if (calculator.firstNumber !== null && calculator.secondNumber !== null) {
+                    calculator.result = calculator.operate();
                 displayList = [];
                 lengthIncrementor = 0;
-                calcObj.secondNumber = null;
-                calcObj.firstNumber = null;
-                calcObj.operator = null;
-                displayResult(calcObj.result);
+                calculator.secondNumber = null;
+                calculator.firstNumber = null;
+                calculator.operator = null;
+                displayResult(calculator.result);
                 }    
             }
         }
@@ -141,9 +138,9 @@ function initializeCalculator () {
     function resetCalculator() {
         displayList = [];
         lengthIncrementor = 0;
-        calcObj.firstNumber = null;
-        calcObj.secondNumber = null;
-        calcObj.operator = null;
+        calculator.firstNumber = null;
+        calculator.secondNumber = null;
+        calculator.operator = null;
     }
 
     function updateDisplay() {
